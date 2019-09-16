@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
-const express = express('express')
-const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const Book = require('./book');
 var cors = require('cors');
 
 const port = 3000;
@@ -12,16 +13,30 @@ app.use(bodyParser.json());
 
 const router = express.Router();
 
-const dbRoute = 'mongodb+srv://agreen:<#####>@cluster0-mhpdt.mongodb.net/test?retryWrites=true&w=majority'
+const dbRoute = 'mongodb+srv://agreen:<326849Ag!>@cluster0-mhpdt.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(dbRoute, {useNewUrlParser: true})
 let database = mongoose.connection;
 
 database.once('open', () => console.log('connected to the database'));
 database.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-router.get('/getData', (req, res) => {
-    Data.find((err, data) => {
+router.get('/getBook', (req, res) => {
+    Book.find((err, book) => {
       if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true, data: data });
+      return res.json({ success: true, book: book });
     });
   });
+
+router.post('/putBook', (req, res) => {
+    let book = new Book();
+    const {id, title, author} = req.body();
+
+    // add data validation here
+
+    book.id = id;
+    book.title = title;
+    book.author = author;
+});
+
+app.use('/api', router);
+app.listen(port, () => console.log(`LISTENING ON PORT ${port}`));
