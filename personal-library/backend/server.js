@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 const router = express.Router();
 
-const dbRoute = 'mongodb+srv://agreen:<326849Ag!>@cluster0-mhpdt.mongodb.net/test?retryWrites=true&w=majority'
+const dbRoute = 'mongodb+srv://agreen:<#######>@cluster0-mhpdt.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(dbRoute, {useNewUrlParser: true})
 let database = mongoose.connection;
 
